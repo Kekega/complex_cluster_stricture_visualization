@@ -4,7 +4,7 @@ import pandas as pd
 from scipy.spatial import ConvexHull
 import random
 
-def mesh_2d_chart(X, y, dist_threshold=1):
+def mesh_2d_chart(X, y, dist_threshold=3):
     # Concatenate X and y arrays
     arr_concat = np.concatenate((X, y.reshape(y.shape[0],1)), axis=1)
     # Create a Pandas dataframe using the above array
@@ -21,6 +21,16 @@ def mesh_2d_chart(X, y, dist_threshold=1):
 
         tdf = df.loc[df['label'] == label, ['x', 'y']]
 
+        scatter = go.Scatter(
+            x=tdf['x'], y=tdf['y'],
+            mode='markers',
+            marker=dict(
+                size=3,
+                color=col,
+                opacity=0.8),
+            name=str(label)
+        )
+
         # Compute the centroid and the median distance
         centroid = tdf.mean()
         dists = np.linalg.norm(tdf - centroid, axis=1)
@@ -31,16 +41,6 @@ def mesh_2d_chart(X, y, dist_threshold=1):
 
         points = np.array(tdf)
         hull = ConvexHull(points)
-
-        scatter = go.Scatter(
-            x=tdf['x'], y=tdf['y'],
-            mode='markers',
-            marker=dict(
-                size=3,
-                color=col,
-                opacity=0.8),
-            name=str(label)
-        )
 
         x_hull = np.append(points[hull.vertices,0],
                            points[hull.vertices,0][0])
