@@ -1,9 +1,9 @@
 import umap.umap_ as umap
 
 # Configure UMAP hyperparameters
-def reduce_umap(X):
+def reduce_umap(X, n_components=2):
     reducer = umap.UMAP(n_neighbors=100, # default 15, The size of local neighborhood (in terms of number of neighboring sample points) used for manifold approximation.
-               n_components=3, # default 2, The dimension of the space to embed into.
+               n_components=n_components, # default 2, The dimension of the space to embed into.
                metric='euclidean', # default 'euclidean', The metric to use to compute distances in high dimensional space.
                n_epochs=1000, # default None, The number of training epochs to be used in optimizing the low dimensional embedding. Larger values result in more accurate embeddings.
                learning_rate=1.0, # default 1.0, The initial learning rate for the embedding optimization.
