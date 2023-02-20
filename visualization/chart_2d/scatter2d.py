@@ -1,5 +1,4 @@
 import plotly.graph_objs as go
-from scipy.spatial import ConvexHull
 import numpy as np
 import pandas as pd
 import random

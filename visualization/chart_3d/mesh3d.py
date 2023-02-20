@@ -1,5 +1,5 @@
 from scipy.interpolate import LinearNDInterpolator
-from scipy.spatial import ConvexHull, Delaunay
+from scipy.spatial import ConvexHull
 import plotly.graph_objs as go
 import numpy as np
 import pandas as pd
