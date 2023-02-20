@@ -1,5 +1,10 @@
 from sklearn.datasets import load_digits # for MNIST data
 
+# visualization utils
+from reduce_methods.reduce_umap import reduce_umap
+from reduce_methods.reduce_tsne import reduce_tsne
+from visualization.draw_chart import draw_chart
+
 # parse parameters
 import argparse
 
@@ -9,6 +14,9 @@ parser.add_argument('-d', '--dimension', type=int, choices=[2, 3], required=True
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument('-u', '--umap', action='store_true', help='Use UMAP to process data')
 group.add_argument('-t', '--tsne', action='store_true', help='Use t-SNE to process data')
+group = parser.add_mutually_exclusive_group(required=True)
+group.add_argument('-s', '--scatter', action='store_true', help='Draw only scatter on the plot')
+group.add_argument('-m', '--mesh', action='store_true', help='Draw mesh surface on the plot')
 
 args = parser.parse_args()
 
@@ -20,12 +28,6 @@ X, y = load_digits(return_X_y=True)
 print('Shape of X (main data): ', X.shape)
 print('Shape of y (true labels): ', y.shape)
 
-
-from visualization.mesh3d import mesh_3d_thresh_chart
-from reduce_methods.reduce_umap import reduce_umap
-from reduce_methods.reduce_tsne import reduce_tsne
-from visualization.scatter2d import mesh_2d_thresh_chart
-
 print('Dimension:', args.dimension)
 
 if args.umap:
@@ -35,7 +37,15 @@ else:
     print('t-SNE selected')
     X_trans = reduce_tsne(X, n_components=args.dimension)
 
-if args.dimension == 2:
-    mesh_2d_thresh_chart(X_trans, y)
-else:
-    mesh_3d_thresh_chart(X_trans, y)
+# print(args.scatter, args.mesh)
+
+
+draw_chart(X_trans, y, dim=args.dimension, mesh=args.mesh)
+
+
+# if args.dimension == 2:
+#     draw_2d_chart(X_trans, y)
+#     # mesh_2d_thresh_chart(X_trans, y)
+# else:
+#     draw_3d_chart(X_trans, y)
+#     # mesh_3d_thresh_chart(X_trans, y)

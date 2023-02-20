@@ -3,6 +3,7 @@ from scipy.spatial import ConvexHull, Delaunay
 import plotly.graph_objs as go
 import numpy as np
 import pandas as pd
+import random
 
 def mesh_3d_no_thresh_chart(X, y):
     # Create a Pandas dataframe using the X and y arrays
@@ -13,6 +14,9 @@ def mesh_3d_no_thresh_chart(X, y):
     fig = go.Figure()
 
     for label in df['label'].unique():
+        c1, c2, c3 = random.sample(range(0, 255), 3)
+        col = f"rgb({c1},{c2},{c3})"
+
         tdf = df.loc[df['label'] == label, ['x', 'y', 'z']]
 
         # Compute the convex hull
@@ -25,7 +29,7 @@ def mesh_3d_no_thresh_chart(X, y):
             mode='markers',
             marker=dict(
                 size=3,
-                color=label,
+                color=col,
                 opacity=0.8),
             name=str(label)
         )
@@ -47,7 +51,7 @@ def mesh_3d_no_thresh_chart(X, y):
             x=mesh_points[:, 0], y=mesh_points[:, 1], z=mesh_points[:, 2],
             i=i_interp, j=j_interp, k=k_interp,
             opacity=0.2,
-            color=label,
+            color=col,
             name=f'{label} interp'
         )
 
@@ -80,6 +84,9 @@ def mesh_3d_thresh_chart(X, y, dist_threshold=3):
 
     fig = go.Figure()
     for label in df['label'].unique():
+        c1, c2, c3 = random.sample(range(0, 255), 3)
+        col = f"rgb({c1},{c2},{c3})"
+
         tdf = df.loc[df['label'] == label, ['x', 'y', 'z']]
 
         # Compute the centroid and the median distance
@@ -98,7 +105,7 @@ def mesh_3d_thresh_chart(X, y, dist_threshold=3):
             mode='markers',
             marker=dict(
                 size=3,
-                color=label,
+                color=col,
                 opacity=0.8),
             name=str(label)
         )
@@ -108,7 +115,7 @@ def mesh_3d_thresh_chart(X, y, dist_threshold=3):
             x=points[:, 0], y=points[:, 1], z=points[:, 2],
             i=i, j=j, k=k,
             opacity=0.2,
-            color=label,
+            color=col,
             name=str(label)
         )
 

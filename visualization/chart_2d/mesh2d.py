@@ -36,7 +36,7 @@ def mesh_2d_thresh_chart(X, y, dist_threshold=2):
             mode='markers',
             marker=dict(
                 size=3,
-                color=label,
+                color=col,
                 opacity=0.8),
             name=str(label)
         )
