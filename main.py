@@ -37,15 +37,4 @@ else:
     print('t-SNE selected')
     X_trans = reduce_tsne(X, n_components=args.dimension)
 
-# print(args.scatter, args.mesh)
-
-
 draw_chart(X_trans, y, dim=args.dimension, mesh=args.mesh)
-
-
-# if args.dimension == 2:
-#     draw_2d_chart(X_trans, y)
-#     # mesh_2d_thresh_chart(X_trans, y)
-# else:
-#     draw_3d_chart(X_trans, y)
-#     # mesh_3d_thresh_chart(X_trans, y)

@@ -1,10 +1,10 @@
-import plotly.graph_objs as go
-from scipy.spatial import ConvexHull
+import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
+from scipy.spatial import ConvexHull
 import random
 
-def mesh_2d_thresh_chart(X, y, dist_threshold=2):
+def mesh_2d_chart(X, y, dist_threshold=1):
     # Concatenate X and y arrays
     arr_concat = np.concatenate((X, y.reshape(y.shape[0],1)), axis=1)
     # Create a Pandas dataframe using the above array
@@ -16,8 +16,9 @@ def mesh_2d_thresh_chart(X, y, dist_threshold=2):
 
     fig = go.Figure()
     for label in df['label'].unique():
-        c1, c2, c3 = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+        c1, c2, c3 = random.sample(range(0, 255), 3)
         col = f"rgb({c1},{c2},{c3})"
+
         tdf = df.loc[df['label'] == label, ['x', 'y']]
 
         # Compute the centroid and the median distance
@@ -41,12 +42,15 @@ def mesh_2d_thresh_chart(X, y, dist_threshold=2):
             name=str(label)
         )
 
-        i, j = hull.simplices.transpose()
+        x_hull = np.append(points[hull.vertices,0],
+                           points[hull.vertices,0][0])
+        y_hull = np.append(points[hull.vertices,1],
+                           points[hull.vertices,1][0])
         mesh = go.Scatter(
-            x=points[:, 0], y=points[:, 1],
-            line=dict(width=2, color=col),
+            x=x_hull, y=y_hull,
             fill='toself',
-            fillcolor='rgba(0,0,0,0.1)',
+            fillcolor='rgba(0, 0, 0, 0)',
+            line=dict(color=col),
             name=str(label)
         )
 

@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import random
 
-def scatter_2d(X, y, dist_threshold=2):
+def scatter_2d(X, y):
     # Concatenate X and y arrays
     arr_concat = np.concatenate((X, y.reshape(y.shape[0],1)), axis=1)
     # Create a Pandas dataframe using the above array
