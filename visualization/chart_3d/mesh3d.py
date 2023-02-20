@@ -89,6 +89,16 @@ def mesh_3d_thresh_chart(X, y, dist_threshold=3):
 
         tdf = df.loc[df['label'] == label, ['x', 'y', 'z']]
 
+        scatter = go.Scatter3d(
+            x=tdf['x'], y=tdf['y'], z=tdf['z'],
+            mode='markers',
+            marker=dict(
+                size=3,
+                color=col,
+                opacity=0.8),
+            name=str(label)
+        )
+
         # Compute the centroid and the median distance
         centroid = tdf.mean()
         dists = np.linalg.norm(tdf - centroid, axis=1)
@@ -99,16 +109,6 @@ def mesh_3d_thresh_chart(X, y, dist_threshold=3):
 
         points = np.array(tdf)
         hull = ConvexHull(points)
-
-        scatter = go.Scatter3d(
-            x=tdf['x'], y=tdf['y'], z=tdf['z'],
-            mode='markers',
-            marker=dict(
-                size=3,
-                color=col,
-                opacity=0.8),
-            name=str(label)
-        )
 
         i, j, k = hull.simplices.transpose()
         mesh = go.Mesh3d(
