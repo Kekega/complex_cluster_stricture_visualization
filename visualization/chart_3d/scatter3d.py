@@ -3,7 +3,7 @@ import numpy as np
 import plotly.express as px # for data visualization
 
 
-def scatter_3d_chart(X, y):
+def scatter_3d(X, y):
     # --------------------------------------------------------------------------#
     # This section is not mandatory as its purpose is to sort the data by label
     # so, we can maintain consistent colors for digits across multiple graphs
